@@ -1,26 +1,26 @@
 -- Insert furniture types with their categories
-INSERT INTO furniture_types (id, name, category) VALUES
-(1, 'Modern Sofa', 'sofa'),
-(2, 'Classic Sofa', 'sofa'),
-(3, 'Accent Chair', 'chair'),
-(4, 'Dining Chair', 'chair'),
-(5, 'Office Desk', 'desk'),
-(6, 'Dining Table', 'table'),
-(7, 'Coffee Table', 'table'),
-(8, 'Side Table', 'table'),
-(9, 'Platform Bed', 'bed');
+INSERT INTO furniture_types (name, category) VALUES
+('Modern Sofa', 'sofa'),
+('Classic Sofa', 'sofa'),
+('Accent Chair', 'chair'),
+('Dining Chair', 'chair'),
+('Office Desk', 'desk'),
+('Dining Table', 'table'),
+('Coffee Table', 'table'),
+('Side Table', 'table'),
+('Platform Bed', 'bed');
 
 -- Insert furniture parts
-INSERT INTO furniture_parts (id, name) VALUES
-(1, 'Seat Cushion'),
-(2, 'Backrest'),
-(3, 'Armrest'),
-(4, 'Frame'),
-(5, 'Legs'),
-(6, 'Top Surface'),
-(7, 'Headboard'),
-(8, 'Footboard'),
-(9, 'Platform');
+INSERT INTO furniture_parts (name) VALUES
+('Seat Cushion'),
+('Backrest'),
+('Armrest'),
+('Frame'),
+('Legs'),
+('Top Surface'),
+('Headboard'),
+('Footboard'),
+('Platform');
 
 -- Link furniture types to their parts
 INSERT INTO furniture_type_parts (furniture_type_id, furniture_part_id) VALUES
@@ -43,7 +43,7 @@ INSERT INTO furniture_type_parts (furniture_type_id, furniture_part_id) VALUES
 -- Bed (id: 9)
 (9, 7), (9, 8), (9, 9), (9, 4), (9, 5);  -- Platform Bed
 
--- Insert texture categories
+-- Insert texture categories with descriptions
 INSERT INTO texture_categories (id, name, description) VALUES
 (1, 'Fabric', 'Soft and comfortable fabric materials'),
 (2, 'Leather', 'Premium leather materials'),
@@ -93,29 +93,95 @@ INSERT INTO part_texture_categories (part_id, texture_category_id) VALUES
 (9, 3),  -- Wood
 (9, 4);  -- Metal
 
--- Insert textures
-INSERT INTO textures (id, name, category_id, description, prompt, preview_image_path, thumbnail_path) VALUES
+-- Insert textures with descriptions
+INSERT INTO textures (id, name, category_id, description, preview_image_path, thumbnail_path) VALUES
 -- Fabric textures
-(1, 'Blue Velvet', 1, 'Deep plush velvet texture with visible pile and light-catching surface, rich jewel-toned blue color', 'Deep blue velvet texture, high resolution', '/textures/fabric/velvet_blue.jpg', '/textures/thumbnails/fabric/velvet_blue.jpg'),
-(2, 'Gray Linen', 1, 'Natural linen fabric with visible woven texture, modern gray tone', 'Gray linen fabric texture, high resolution', '/textures/fabric/linen_gray.jpg', '/textures/thumbnails/fabric/linen_gray.jpg'),
-(3, 'Beige Cotton', 1, 'Soft cotton weave in warm beige, casual and comfortable', 'Beige cotton fabric texture, high resolution', '/textures/fabric/cotton_beige.jpg', '/textures/thumbnails/fabric/cotton_beige.jpg'),
+(1, 'Blue Velvet', 1, 'Deep plush velvet texture with visible pile and light-catching surface', '/textures/fabric/full/velvet_blue.jpg', '/textures/fabric/thumbnails/velvet_blue.jpg'),
+(2, 'Gray Linen', 1, 'Natural linen fabric with visible woven texture', '/textures/fabric/full/linen_gray.jpg', '/textures/fabric/thumbnails/linen_gray.jpg'),
+(3, 'Beige Cotton', 1, 'Soft cotton weave in warm beige', '/textures/fabric/full/cotton_beige.jpg', '/textures/fabric/thumbnails/cotton_beige.jpg'),
 
 -- Leather textures
-(4, 'Brown Leather', 2, 'Premium full-grain leather with natural pores, rich brown color', 'Brown leather texture, high resolution', '/textures/leather/leather_brown.jpg', '/textures/thumbnails/leather/leather_brown.jpg'),
-(5, 'Black Leather', 2, 'Smooth black leather with subtle grain pattern', 'Black leather texture, high resolution', '/textures/leather/leather_black.jpg', '/textures/thumbnails/leather/leather_black.jpg'),
+(4, 'Brown Leather', 2, 'Premium full-grain leather with natural pores', '/textures/leather/full/leather_brown.jpg', '/textures/leather/thumbnails/leather_brown.jpg'),
+(5, 'Black Leather', 2, 'Smooth black leather with subtle grain pattern', '/textures/leather/full/leather_black.jpg', '/textures/leather/thumbnails/leather_black.jpg'),
 
 -- Wood textures
-(6, 'Oak Wood', 3, 'Natural oak wood grain with warm honey tones', 'Oak wood texture, high resolution', '/textures/wood/wood_oak.jpg', '/textures/thumbnails/wood/wood_oak.jpg'),
-(7, 'Walnut Wood', 3, 'Rich dark walnut wood with distinctive grain pattern', 'Walnut wood texture, high resolution', '/textures/wood/wood_walnut.jpg', '/textures/thumbnails/wood/wood_walnut.jpg'),
+(6, 'Oak Wood', 3, 'Natural oak wood grain with warm honey tones', '/textures/wood/full/wood_oak.jpg', '/textures/wood/thumbnails/wood_oak.jpg'),
+(7, 'Walnut Wood', 3, 'Rich dark walnut wood with distinctive grain pattern', '/textures/wood/full/wood_walnut.jpg', '/textures/wood/thumbnails/wood_walnut.jpg'),
 
 -- Metal textures
-(8, 'Brushed Steel', 4, 'Brushed stainless steel with linear grain pattern', 'Brushed steel texture, high resolution', '/textures/metal/metal_steel.jpg', '/textures/thumbnails/metal/metal_steel.jpg'),
-(9, 'Brass', 4, 'Polished brass with warm golden tone', 'Brass metal texture, high resolution', '/textures/metal/metal_brass.jpg', '/textures/thumbnails/metal/metal_brass.jpg'),
+(8, 'Brushed Steel', 4, 'Brushed stainless steel with linear grain pattern', '/textures/metal/full/metal_steel.jpg', '/textures/metal/thumbnails/metal_steel.jpg'),
+(9, 'Brass', 4, 'Polished brass with warm golden tone', '/textures/metal/full/metal_brass.jpg', '/textures/metal/thumbnails/metal_brass.jpg'),
 
 -- Glass textures
-(10, 'Clear Glass', 5, 'Transparent glass with subtle surface reflection', 'Clear glass texture, high resolution', '/textures/glass/glass_clear.jpg', '/textures/thumbnails/glass/glass_clear.jpg'),
-(11, 'Frosted Glass', 5, 'Frosted glass with diffused light effect', 'Frosted glass texture, high resolution', '/textures/glass/glass_frosted.jpg', '/textures/thumbnails/glass/glass_frosted.jpg'),
+(10, 'Clear Glass', 5, 'Transparent glass with subtle surface reflection', '/textures/glass/full/glass_clear.jpg', '/textures/glass/thumbnails/glass_clear.jpg'),
+(11, 'Frosted Glass', 5, 'Frosted glass with diffused light effect', '/textures/glass/full/glass_frosted.jpg', '/textures/glass/thumbnails/glass_frosted.jpg'),
 
 -- Stone textures
-(12, 'Marble', 6, 'White marble with gray veining', 'White marble texture, high resolution', '/textures/stone/stone_marble.jpg', '/textures/thumbnails/stone/stone_marble.jpg'),
-(13, 'Granite', 6, 'Speckled granite in gray and black tones', 'Granite texture, high resolution', '/textures/stone/stone_granite.jpg', '/textures/thumbnails/stone/stone_granite.jpg'); 
+(12, 'Marble', 6, 'White marble with gray veining', '/textures/stone/full/stone_marble.jpg', '/textures/stone/thumbnails/stone_marble.jpg'),
+(13, 'Granite', 6, 'Speckled granite in gray and black tones', '/textures/stone/full/stone_granite.jpg', '/textures/stone/thumbnails/stone_granite.jpg');
+
+-- Update textures with proper image paths
+UPDATE textures SET 
+    preview_image_path = '/textures/fabric/full/velvet_blue.jpg',
+    thumbnail_path = '/textures/fabric/thumbnails/velvet_blue.jpg'
+WHERE id = 1;
+
+UPDATE textures SET 
+    preview_image_path = '/textures/fabric/full/linen_gray.jpg',
+    thumbnail_path = '/textures/fabric/thumbnails/linen_gray.jpg'
+WHERE id = 2;
+
+UPDATE textures SET 
+    preview_image_path = '/textures/fabric/full/cotton_beige.jpg',
+    thumbnail_path = '/textures/fabric/thumbnails/cotton_beige.jpg'
+WHERE id = 3;
+
+UPDATE textures SET 
+    preview_image_path = '/textures/leather/full/leather_brown.jpg',
+    thumbnail_path = '/textures/leather/thumbnails/leather_brown.jpg'
+WHERE id = 4;
+
+UPDATE textures SET 
+    preview_image_path = '/textures/leather/full/leather_black.jpg',
+    thumbnail_path = '/textures/leather/thumbnails/leather_black.jpg'
+WHERE id = 5;
+
+UPDATE textures SET 
+    preview_image_path = '/textures/wood/full/wood_oak.jpg',
+    thumbnail_path = '/textures/wood/thumbnails/wood_oak.jpg'
+WHERE id = 6;
+
+UPDATE textures SET 
+    preview_image_path = '/textures/wood/full/wood_walnut.jpg',
+    thumbnail_path = '/textures/wood/thumbnails/wood_walnut.jpg'
+WHERE id = 7;
+
+UPDATE textures SET 
+    preview_image_path = '/textures/metal/full/metal_steel.jpg',
+    thumbnail_path = '/textures/metal/thumbnails/metal_steel.jpg'
+WHERE id = 8;
+
+UPDATE textures SET 
+    preview_image_path = '/textures/metal/full/metal_brass.jpg',
+    thumbnail_path = '/textures/metal/thumbnails/metal_brass.jpg'
+WHERE id = 9;
+
+UPDATE textures SET 
+    preview_image_path = '/textures/glass/full/glass_clear.jpg',
+    thumbnail_path = '/textures/glass/thumbnails/glass_clear.jpg'
+WHERE id = 10;
+
+UPDATE textures SET 
+    preview_image_path = '/textures/glass/full/glass_frosted.jpg',
+    thumbnail_path = '/textures/glass/thumbnails/glass_frosted.jpg'
+WHERE id = 11;
+
+UPDATE textures SET 
+    preview_image_path = '/textures/stone/full/stone_marble.jpg',
+    thumbnail_path = '/textures/stone/thumbnails/stone_marble.jpg'
+WHERE id = 12;
+
+UPDATE textures SET 
+    preview_image_path = '/textures/stone/full/stone_granite.jpg',
+    thumbnail_path = '/textures/stone/thumbnails/stone_granite.jpg'
+WHERE id = 13; 

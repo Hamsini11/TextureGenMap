@@ -8,14 +8,16 @@ interface Texture {
   description: string;
   category: string;
   thumbnail?: string;
+  partName?: string;
 }
 
 interface TextureSelectorProps {
-  furnitureCategory: string;
+  furnitureTypeId: number;
+  partId: number;
   onSelect: (textureId: number) => void;
 }
 
-const TextureSelector: React.FC<TextureSelectorProps> = ({ furnitureCategory, onSelect }) => {
+const TextureSelector: React.FC<TextureSelectorProps> = ({ furnitureTypeId, partId, onSelect }) => {
   const [textures, setTextures] = useState<Texture[]>([]);
   const [selectedTexture, setSelectedTexture] = useState<number | null>(null);
   const [hoveredTexture, setHoveredTexture] = useState<number | null>(null);
@@ -26,9 +28,8 @@ const TextureSelector: React.FC<TextureSelectorProps> = ({ furnitureCategory, on
     const fetchTextures = async () => {
       try {
         setLoading(true);
-        const response = await fetch(`http://localhost:5000/api/texture-options?furniture_category=${encodeURIComponent(furnitureCategory)}`);
+        const response = await fetch(`http://localhost:5000/api/texture-options?furniture_type_id=${furnitureTypeId}&part_id=${partId}`);
         const data = await response.json();
-        console.log(`API Response for ${furnitureCategory}:`, data);
         
         if (data.success) {
           const transformedTextures = data.data.map((texture: any) => ({
@@ -37,55 +38,47 @@ const TextureSelector: React.FC<TextureSelectorProps> = ({ furnitureCategory, on
             previewImage: texture.previewImage || texture.preview_image_path,
             description: texture.description,
             category: texture.category,
-            thumbnail: texture.thumbnail || texture.thumbnail_path
+            thumbnail: texture.thumbnail || texture.thumbnail_path,
+            partName: texture.partName
           }));
           
           setTextures(transformedTextures);
-          console.log(`Loaded textures for ${furnitureCategory}:`, transformedTextures);
-          
-          // Log descriptions to console as requested
-          transformedTextures.forEach((texture: Texture) => {
-            console.log(`${texture.name} Description for ${furnitureCategory}:`, texture.description);
-          });
+          setSelectedTexture(null); // Reset selection when textures change
         } else {
           setError(data.error || 'Failed to load textures');
         }
       } catch (error) {
-        console.error(`Error fetching textures for ${furnitureCategory}:`, error);
+        console.error('Error fetching textures:', error);
         setError('Error loading textures');
       } finally {
         setLoading(false);
       }
     };
 
-    if (furnitureCategory) {
+    if (furnitureTypeId && partId) {
       fetchTextures();
     }
-  }, [furnitureCategory]);
+  }, [furnitureTypeId, partId]);
 
   const handleTextureSelect = (textureId: number) => {
     setSelectedTexture(textureId);
     onSelect(textureId);
-    const texture = textures.find(t => t.id === textureId);
-    if (texture) {
-      console.log(`Selected Texture Description for ${furnitureCategory}:`, texture.description);
-    }
   };
 
   if (loading) {
-    return <div className="w-full text-center">Loading textures for {furnitureCategory}...</div>;
+    return <div className="text-white text-center py-4">Loading textures...</div>;
   }
 
   if (error) {
-    return <div className="w-full text-center text-red-500">{error}</div>;
+    return <div className="text-white text-center py-4 bg-red-500/20 rounded-lg">{error}</div>;
   }
 
   return (
     <div className="w-full">
       <div className="grid grid-cols-2 gap-4">
         {textures.length === 0 ? (
-          <div className="col-span-2 text-center">
-            No textures available for {furnitureCategory}
+          <div className="col-span-2 text-center text-white py-4">
+            No textures available for this part
           </div>
         ) : (
           textures.map((texture) => (
@@ -122,6 +115,9 @@ const TextureSelector: React.FC<TextureSelectorProps> = ({ furnitureCategory, on
                     <p className="text-white text-sm font-medium">
                       {texture.name}
                     </p>
+                    <p className="text-white/70 text-xs">
+                      {texture.category}
+                    </p>
                   </div>
                 </div>
               </label>
@@ -135,6 +131,11 @@ const TextureSelector: React.FC<TextureSelectorProps> = ({ furnitureCategory, on
                       <p className="text-sm text-gray-300 mt-1">
                         {texture.description}
                       </p>
+                      {texture.partName && (
+                        <p className="text-sm text-pink-400 mt-1">
+                          Compatible with: {texture.partName}
+                        </p>
+                      )}
                     </div>
                   </div>
                   <div className="absolute bottom-0 left-1/2 -translate-x-1/2 translate-y-1/2 rotate-45 w-4 h-4 bg-black/90" />
